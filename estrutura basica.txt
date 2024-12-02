@@ -1,0 +1,37 @@
+meu_projeto/
+├── main.py
+├── requirements.txt
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── styles/
+│
+├── pages/
+│   ├── __init__.py
+│   ├── home_page.py
+│   ├── login_page.py
+│   ├── cadastro/
+│   │   ├── __init__.py
+│   │   ├── cadastro_usuario_page.py
+│   │   └── cadastro_produto_page.py
+│
+├── partials/
+│   ├── __init__.py
+│   ├── navbar.py
+│   ├── footer.py
+│   └── form_component.py
+│
+├── services/
+│   ├── __init__.py
+│   ├── database_service.py
+│   └── api_service.py
+│
+├── utils/
+│   ├── __init__.py
+│   ├── helpers.py
+│   └── validators.py
+│
+└── tests/
+    ├── __init__.py
+    ├── test_home_page.py
+    └── test_services.py
