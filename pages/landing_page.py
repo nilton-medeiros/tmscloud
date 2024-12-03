@@ -1,11 +1,68 @@
 import flet as ft
 
 
+class MainContentItem():
+    def __init__(self, title: str, description: str, image: str, image_left=True):
+        self.title = title
+        self.description = description
+        self.image_left = image_left
+        self.image = ft.Image(
+            src=image,
+            # width=750,
+            # height=300,
+            # fit=ft.ImageFit.CONTAIN,
+        )
+
+    def build(self):
+        description = ft.Column(
+            controls=[
+                ft.Text(value=self.title,
+                        theme_style=ft.TextThemeStyle.TITLE_LARGE),
+                ft.Text(value=self.description,
+                        theme_style=ft.TextThemeStyle.TITLE_SMALL),
+            ],
+            spacing=20,
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+
+        image_ctnr = ft.Container(
+            content=self.image,
+            col={"md": 5},
+            alignment=ft.alignment.center
+        )
+        descr_ctnr = ft.Container(
+            content=description,
+            col={"md": 7},
+            alignment=ft.alignment.center
+        )
+
+        side_left = image_ctnr if self.image_left else descr_ctnr
+        side_right = descr_ctnr if self.image_left else image_ctnr
+        bgcolor = ft.colors.BLUE_GREY_700 if self.image_left else ft.colors.BLUE_GREY_800
+
+        return ft.Container(
+            content=ft.ResponsiveRow(
+                controls=[side_left, side_right],
+                spacing=20,
+                # run_spacing={"xs": 10},
+                vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                alignment=ft.MainAxisAlignment.CENTER,
+            ),
+            margin=ft.margin.only(top=40),
+            bgcolor=bgcolor,
+            padding=20,
+            border_radius=10,
+            alignment=ft.alignment.center,
+        )
+
+
 class LandingPage():
     def __init__(self, page: ft.Page):
         self.page = page
         self.title_bar = ft.Text(
-            "TMS.CLOUD Gerenciamento de Transporte e logística", color=ft.colors.WHITE)
+            value="TMS.CLOUD   Gerenciamento de Transporte e logística",
+            color=ft.colors.WHITE,
+        )
 
     def build(self):
         def on_signup_click(e):
@@ -29,26 +86,44 @@ class LandingPage():
             # Ajusta o tamanho do texto com base na largura da tela
             width = self.page.width
 
-            self.title_bar.value = "TMS.CLOUD Gerenciamento de Transporte e logística"
+            # Debug
+            # print(f"Width: {width}")
+
+            self.title_bar.value = "TMS.CLOUD   Gerenciamento de Transporte e logística"
 
             self.actions_button.clear()
             self.actions_button.extend([
-                ft.TextButton("Inscrever-se", on_click=on_signup_click),
-                ft.TextButton("Login", on_click=on_login_click),
+                ft.TextButton(
+                    text="Inscrever-se",
+                    style=ft.ButtonStyle(color=ft.colors.WHITE),
+                    on_click=on_signup_click,
+                ),
+                ft.TextButton(
+                    text="Login",
+                    style=ft.ButtonStyle(color=ft.colors.WHITE),
+                    on_click=on_login_click,
+                ),
             ])
 
             if width < 600:         # xs
                 self.title_bar.size = 14
                 self.title_bar.max_lines = 3
 
-                if width < 500:
+                if width < 570:
                     self.title_bar.size = 12
-                if width < 450:
-                    self.title_bar.value = "TMS.CLOUD"
-                    if width < 390:
-                        self.actions_button.clear()
-                        self.actions_button.append(ft.TextButton(
-                            "Login", on_click=self.on_login_click))
+                    if width < 500:
+                        self.title_bar.value = "TMS.CLOUD" if width >= 435 else "TMS"
+                        if width < 385:
+                            self.actions_button.pop(0)
+                            # self.actions_button.clear()
+                            # self.actions_button.append(
+                            #     ft.TextButton(
+                            #         text="Login",
+                            #         style=ft.ButtonStyle(
+                            #             color=ft.colors.WHITE),
+                            #         on_click=on_login_click,
+                            #     ),
+                            # )
             elif width < 900:       # sm
                 self.title_bar.size = 16
             elif width < 1200:      # md
@@ -61,8 +136,16 @@ class LandingPage():
             self.page.update()
 
         self.actions_button = [
-            ft.TextButton("Inscrever-se", on_click=on_signup_click),
-            ft.TextButton("Login", on_click=on_login_click),
+            ft.TextButton(
+                text="Inscrever-se",
+                style=ft.ButtonStyle(color=ft.colors.WHITE),
+                on_click=on_signup_click,
+            ),
+            ft.TextButton(
+                text="Login",
+                style=ft.ButtonStyle(color=ft.colors.WHITE),
+                on_click=on_login_click,
+            ),
         ]
 
         # Menu AppBar
@@ -95,15 +178,6 @@ class LandingPage():
             text_align=ft.TextAlign.CENTER,
         )
 
-        # Imagem (URL de exemplo)
-        image = ft.Image(
-            # src="https://1drv.ms/i/s!Arw7KAe8DRzRlOgzY81X2Fc5XvR-ww?e=RZmpcJ",  # Substitua pela URL da sua imagem
-            src="images/lobo.jpg",  # Substitua pela URL da sua imagem
-            # width=750,
-            # height=300,
-            # fit=ft.ImageFit.CONTAIN,
-        )
-
         def on_register_click(e):
             dlg = ft.AlertDialog(
                 title=ft.Text("Obrigado!"),
@@ -120,13 +194,35 @@ class LandingPage():
         )
 
         main_content = ft.Column(
-            [
+            controls=[
                 title,
                 subtitle,
-                image,
+                MainContentItem(
+                    title="Transforme sua Gestão de Transporte com TMS.CLOUD",
+                    description="O TMS.CLOUD é a solução completa para o gerenciamento de transporte e logística. Automatize processos, controle suas operações em tempo real e reduza custos com uma plataforma intuitiva e eficiente. Leve a gestão do seu transporte de cargas para o próximo nível.",
+                    image="images/lobo.jpg",
+                    image_left=True,
+                ).build(),
+                MainContentItem(
+                    title="Emita CTe 4.0 com Facilidade",
+                    description="Simplifique a emissão do CT-e 4.0 diretamente no TMS.CLOUD. Garanta conformidade com a legislação, reduza erros e ganhe agilidade no transporte de carga. Tudo integrado e automatizado para otimizar suas operações.",
+                    image="images/lobo.jpg",
+                    image_left=False
+                ).build(),
+                MainContentItem(
+                    title="Gerencie seus MDFe's",
+                    description="Emita e gerencie MDF-e de forma rápida e segura. O TMS.CLOUD facilita o controle de cargas em trânsito, centraliza informações e garante a conformidade com a legislação fiscal. Otimize suas rotas e operações.",
+                    image="images/lobo.jpg",
+                    image_left=True
+                ).build(),
+                MainContentItem(
+                    title="Controle Total do Faturamento dos CT-es Emitidos",
+                    description="Gere e acompanhe o faturamento dos seus CT-es com o TMS.CLOUD. Tenha relatórios precisos, automatize cobranças e otimize a gestão financeira da sua empresa. Mais controle, menos burocracia.",
+                    image="images/lobo.jpg",
+                    image_left=False
+                ).build(),
                 register_button,
             ],
-            alignment=ft.MainAxisAlignment.CENTER,
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             spacing=20,
         )

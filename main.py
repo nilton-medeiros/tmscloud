@@ -38,17 +38,17 @@ class AppTheme:
                 size=30,
             )
         ),
-        scrollbar_theme=ft.ScrollbarTheme(
-            track_visibility=False,
-            thumb_visibility=False,
-            track_color={
-                ft.ControlState.DEFAULT: ft.colors.TRANSPARENT,
-            },
-            thumb_color={
-                ft.ControlState.HOVERED: ft.colors.TRANSPARENT,
-                ft.ControlState.DEFAULT: ft.colors.TRANSPARENT,
-            }
-        )
+        # scrollbar_theme=ft.ScrollbarTheme(
+        #     track_visibility=False,
+        #     thumb_visibility=False,
+        #     track_color={
+        #         ft.ControlState.DEFAULT: ft.colors.TRANSPARENT,
+        #     },
+        #     thumb_color={
+        #         ft.ControlState.HOVERED: ft.colors.TRANSPARENT,
+        #         ft.ControlState.DEFAULT: ft.colors.TRANSPARENT,
+        #     }
+        # )
     )
 
 
@@ -59,7 +59,7 @@ class App:
 
         self.page.theme = self.theme
         self.page.title = "TMS.CLOUD"
-        self.page.padding = 0
+        # self.page.padding = 0
         self.page.scroll = ft.ScrollMode.AUTO
         self.page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
