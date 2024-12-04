@@ -1,6 +1,6 @@
 import flet as ft
 
-from pages.landing_page import LandingPage
+from pages.landing.landing_page import LandingPage
 
 
 class AppTheme:

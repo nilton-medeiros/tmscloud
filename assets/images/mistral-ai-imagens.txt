@@ -1,0 +1,39 @@
+Eu não posso criar imagens diretamente, mas posso descrever como a imagem poderia ser.
+
+### Descrição da Imagem:
+
+**Título:** "Gerencie seus MDFe's"
+
+**Elementos Visuais:**
+
+1. **Fundo:**
+   - Um fundo limpo e profissional, possivelmente em tons de azul ou cinza, que transmite confiança e segurança.
+
+2. **Ícones e Gráficos:**
+   - Um caminhão estilizado ou um ícone de logística para representar o transporte de cargas.
+   - Um ícone de documento ou certificado para simbolizar o MDFe (Manifesto Eletrônico de Documentos Fiscais).
+   - Um gráfico de barras ou linhas para indicar otimização e eficiência.
+   - Um ícone de nuvens ou servidor para representar o TMS.CLOUD.
+
+3. **Texto:**
+   - O título "Gerencie seus MDFe's" em destaque, com uma fonte clara e legível.
+   - A descrição "Emita e gerencie MDF-e de forma rápida e segura. O TMS.CLOUD facilita o controle de cargas em trânsito, centraliza informações e garante a conformidade com a legislação fiscal. Otimize suas rotas e operações." em um tamanho de fonte menor, mas ainda legível.
+
+4. **Layout:**
+   - O título no topo da imagem.
+   - Os ícones e gráficos distribuídos de forma equilibrada ao redor do título.
+   - A descrição abaixo dos ícones, centralizada e alinhada.
+
+5. **Cores:**
+   - Utilize uma paleta de cores que transmita profissionalismo e tecnologia, como azul, cinza e branco.
+   - Destaque elementos importantes com cores mais vibrantes, como verde ou laranja, para chamar a atenção.
+
+Essa descrição pode ser usada por um designer gráfico para criar a imagem desejada.
+
+
+Create an image with the descriptions below: **Visual Elements:**
+1. **Background:** - A clean, professional background, possibly in shades of blue or gray, which conveys confidence and security.
+2. **Icons and Graphics:** - A stylized truck or logistics icon to represent freight transport. - A document or certificate icon to symbolize the MDFe (Electronic Manifest of Tax Documents). - A bar or line graph to indicate optimization and efficiency. - A cloud or server icon to represent TMS.CLOUD.
+3. **Text:** The title “Manage your MDFe's” in a clear, legible font. - The description “Issue and manage MDF-e quickly and securely. TMS.CLOUD facilitates the control of loads in transit, centralizes information and guarantees compliance with tax legislation. Optimize your routes and operations.” in a smaller font size, but still legible.
+4. **Layout:** - The title at the top of the image. - The icons and graphics distributed evenly around the title. - The description below the icons, centered and aligned.
+5. **Colors:** - Use a color palette that conveys professionalism and technology, such as blue, grey and white. - Highlight important elements with more vibrant colors, such as green or orange, to attract attention.

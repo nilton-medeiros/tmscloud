@@ -1,59 +1,6 @@
 import flet as ft
-
-
-class MainContentItem():
-    def __init__(self, title: str, description: str, image: str, image_left=True):
-        self.title = title
-        self.description = description
-        self.image_left = image_left
-        self.image = ft.Image(
-            src=image,
-            # width=750,
-            # height=300,
-            # fit=ft.ImageFit.CONTAIN,
-        )
-
-    def build(self):
-        description = ft.Column(
-            controls=[
-                ft.Text(value=self.title,
-                        theme_style=ft.TextThemeStyle.TITLE_LARGE),
-                ft.Text(value=self.description,
-                        theme_style=ft.TextThemeStyle.TITLE_SMALL),
-            ],
-            spacing=20,
-            alignment=ft.MainAxisAlignment.CENTER,
-        )
-
-        image_ctnr = ft.Container(
-            content=self.image,
-            col={"md": 5},
-            alignment=ft.alignment.center
-        )
-        descr_ctnr = ft.Container(
-            content=description,
-            col={"md": 7},
-            alignment=ft.alignment.center
-        )
-
-        side_left = image_ctnr if self.image_left else descr_ctnr
-        side_right = descr_ctnr if self.image_left else image_ctnr
-        bgcolor = ft.colors.BLUE_GREY_700 if self.image_left else ft.colors.BLUE_GREY_800
-
-        return ft.Container(
-            content=ft.ResponsiveRow(
-                controls=[side_left, side_right],
-                spacing=20,
-                # run_spacing={"xs": 10},
-                vertical_alignment=ft.CrossAxisAlignment.CENTER,
-                alignment=ft.MainAxisAlignment.CENTER,
-            ),
-            margin=ft.margin.only(top=40),
-            bgcolor=bgcolor,
-            padding=20,
-            border_radius=10,
-            alignment=ft.alignment.center,
-        )
+from .landing_prices import Prices
+from .landing_itens import MainContentItem
 
 
 class LandingPage():
@@ -151,7 +98,7 @@ class LandingPage():
         # Menu AppBar
         self.page.appbar = ft.AppBar(
             leading=ft.Image(
-                src='images/tms_cloud_2048x1024-white.png',
+                src='images/tms_cloud_1024x1024.png',
                 tooltip="TMS.CLOUD | Sistrom Web",
             ),
             # Largura do image em leanding, altura não pode ser alterada.
@@ -186,6 +133,8 @@ class LandingPage():
             )
             self.page.open(dlg)
 
+        precos = Prices().build()
+
         register_button = ft.ElevatedButton(
             "Registre-se Agora",
             bgcolor=ft.colors.GREEN_500,
@@ -200,13 +149,13 @@ class LandingPage():
                 MainContentItem(
                     title="Transforme sua Gestão de Transporte com TMS.CLOUD",
                     description="O TMS.CLOUD é a solução completa para o gerenciamento de transporte e logística. Automatize processos, controle suas operações em tempo real e reduza custos com uma plataforma intuitiva e eficiente. Leve a gestão do seu transporte de cargas para o próximo nível.",
-                    image="images/lobo.jpg",
+                    image="images/tms_lp-01.webp",
                     image_left=True,
                 ).build(),
                 MainContentItem(
                     title="Emita CTe 4.0 com Facilidade",
                     description="Simplifique a emissão do CT-e 4.0 diretamente no TMS.CLOUD. Garanta conformidade com a legislação, reduza erros e ganhe agilidade no transporte de carga. Tudo integrado e automatizado para otimizar suas operações.",
-                    image="images/lobo.jpg",
+                    image="images/tms_lp-02.png",
                     image_left=False
                 ).build(),
                 MainContentItem(
@@ -221,6 +170,7 @@ class LandingPage():
                     image="images/lobo.jpg",
                     image_left=False
                 ).build(),
+                precos,
                 register_button,
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -229,11 +179,28 @@ class LandingPage():
 
         # Rodapé
         footer = ft.Container(
-            content=ft.Text(
-                "© 2024 Inspiração Digital. Todos os direitos reservados.",
-                color=ft.colors.GREY_400,
-                size=12,
-                text_align=ft.TextAlign.CENTER,
+            content=ft.Row(
+                expand=True,
+                controls=[
+                    ft.TextButton(
+                        content=ft.Row(
+                            controls=[
+                                ft.Text(
+                                    value="© 2024 Sistrom Sistemas Web. Todos os direitos reservados.",
+                                    color=ft.colors.GREY_400,
+                                    size=12,
+                                    text_align=ft.TextAlign.CENTER,
+                                ),
+                                ft.Icon(
+                                    name="images/logo_sistrom.png", size=14),
+                            ],
+                            tight=True,
+                        ),
+                        url="https://sistrom.com.br/site/#sistemas",
+                        tooltip="Clique aqui para acessar o site",
+                    ),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
             ),
             padding=10,
             bgcolor=ft.colors.BLUE_GREY_800,
