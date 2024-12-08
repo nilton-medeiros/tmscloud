@@ -75,10 +75,9 @@ class MainContentItem():
         bgcolor = ft.colors.BLUE_GREY_700 if self.image_left else ft.colors.BLUE_GREY_800
 
         return ft.Container(
-            # padding=20,
             bgcolor=bgcolor,
             border_radius=10,
-            margin=ft.margin.only(top=40),
+            # margin=ft.margin.only(top=40),
             expand=True,
             content=ft.ResponsiveRow(
                 controls=[side_left, side_right],
