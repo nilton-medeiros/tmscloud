@@ -229,7 +229,6 @@ class LandingPage():
             padding=20,
             bgcolor=ft.colors.BLUE_GREY_800,
             border_radius=10,
-            margin=ft.margin.only(top=40),
             alignment=ft.alignment.center,
             expand=True,
             content=ft.ResponsiveRow(
