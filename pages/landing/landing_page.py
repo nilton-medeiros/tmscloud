@@ -1,6 +1,98 @@
+import math
 import flet as ft
-from .landing_prices import Prices
-from .landing_itens import MainContentItem
+from typing import List, Dict, Union
+
+from pages.landing.landing_itens import MainContentItem
+
+
+class PriceItem(ft.UserControl):
+    def __init__(self, plano: str, price: int, items_included: List[Dict[str, Union[str, bool]]], col: Dict):
+        super().__init__()
+        self.plano = plano
+        self.price = price
+        self.items_included = items_included
+        self.url = ''
+        self.col = col
+
+    def build(self):
+        price_text = f' {self.price} ' if self.price > 0 else "CONSULTE"
+        pormes_text = '/mês' if self.price > 0 else "-NOS"
+        btn_plano = 'QUERO ESTE' if self.price > 0 else "CONSULTAR"
+
+        return ft.Container(
+            bgcolor=ft.colors.ON_INVERSE_SURFACE,
+            padding=ft.padding.symmetric(vertical=20, horizontal=50),
+            col=self.col,
+            border_radius=10,
+            expand=True,
+            # margin=ft.margin.only(top=20, left=20),
+            margin=ft.margin.all(20),
+            content=ft.Column(
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=30,
+                controls=[
+                    ft.Text(value=self.plano,
+                            theme_style=ft.TextThemeStyle.LABEL_LARGE),
+                    ft.Text(
+                        spans=[
+                            ft.TextSpan(text='R$', style=ft.TextStyle(
+                                color=ft.colors.WHITE)),
+                            ft.TextSpan(text=price_text, style=ft.TextStyle(
+                                color=ft.colors.PRIMARY, weight=ft.FontWeight.BOLD, size=50)),
+                            ft.TextSpan(text=pormes_text, style=ft.TextStyle(
+                                color=ft.colors.WHITE)),
+                        ]
+                    ),
+                    ft.Column(
+                        controls=[
+                            ft.Row(
+                                controls=[
+                                    ft.Icon(
+                                        name=ft.icons.CHECK if item['is_included'] else ft.icons.CLOSE,
+                                        color=ft.colors.PRIMARY,
+                                    ),
+                                    ft.Text(
+                                        value=item['title'], theme_style=ft.TextThemeStyle.BODY_MEDIUM)
+                                ],
+                                alignment=ft.MainAxisAlignment.CENTER,
+                            ) for item in self.items_included
+                        ]
+                    ),
+                    ft.TextButton(
+                        content=ft.Row(
+                            controls=[
+                                ft.Text(
+                                    value=btn_plano, theme_style=ft.TextThemeStyle.BODY_LARGE, color=ft.colors.PRIMARY),
+                                ft.Icon(name=ft.icons.ARROW_FORWARD_IOS,
+                                        size=14, color=ft.colors.PRIMARY),
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER,
+                        ),
+                        url=self.url,
+                    )
+                ]
+            )
+        )
+
+
+class PriceItemPopular(PriceItem):
+    def build(self):
+        price_item = super().build()
+
+        return ft.Stack(
+            controls=[
+                price_item,
+                ft.Container(
+                    bgcolor=ft.colors.PRIMARY,
+                    content=ft.Text(
+                        value='Popular', color=ft.colors.BLACK, weight=ft.FontWeight.BOLD),
+                    padding=ft.padding.symmetric(vertical=5, horizontal=40),
+                    right=-20,
+                    top=50,
+                    rotate=ft.Rotate(angle=math.radians(40)),
+                )
+            ]
+        )
 
 
 class LandingPage():
@@ -133,7 +225,125 @@ class LandingPage():
             )
             self.page.open(dlg)
 
-        precos = Prices().build()
+
+        prices = ft.Container(
+            padding=20,
+            bgcolor=ft.colors.BLUE_GREY_800,
+            border_radius=10,
+            margin=ft.margin.only(top=40),
+            alignment=ft.alignment.center,
+            expand=True,
+            content=ft.ResponsiveRow(
+                columns=12,
+                spacing=30,
+                run_spacing=30,
+                expand=True,
+                controls=[
+                    PriceItem(
+                        plano='DFe-100',
+                        price=45,
+                        items_included=[
+                            {"title": "100 Emissões/mês", "is_included": True},
+                            {"title": "Suporte ilimitado", "is_included": False},
+                            {"title": "Compatível A1", "is_included": True},
+                            {"title": "Armazenamento ilimitado", "is_included": False},
+                            {"title": "Usuários ilimitados", "is_included": False},
+                            {"title": "Emissão de CTe 4.0", "is_included": True},
+                            {"title": "Emissão de MDFe", "is_included": True},
+                            {"title": "Por emitente (CNPJ)", "is_included": True},
+                        ],
+                        col={'xs': 12, 'lg': 4},
+                    ),
+                    PriceItem(
+                        plano='DFe-200',
+                        price=90,
+                        items_included=[
+                            {"title": "200 Emissões/mês", "is_included": True},
+                            {"title": "Suporte ilimitado", "is_included": False},
+                            {"title": "Compatível A1", "is_included": True},
+                            {"title": "Armazenamento ilimitado", "is_included": False},
+                            {"title": "Usuários ilimitados", "is_included": False},
+                            {"title": "Emissão de CTe 4.0", "is_included": True},
+                            {"title": "Emissão de MDFe", "is_included": True},
+                            {"title": "Por emitente (CNPJ)", "is_included": True},
+                        ],
+                        col={'xs': 12, 'lg': 4},
+                    ),
+                    PriceItem(
+                        plano='DFe-300',
+                        price=135,
+                        items_included=[
+                            {"title": "300 Emissões/mês", "is_included": True},
+                            {"title": "Suporte ilimitado", "is_included": False},
+                            {"title": "Compatível A1", "is_included": True},
+                            {"title": "Armazenamento ilimitado", "is_included": False},
+                            {"title": "Usuários ilimitados", "is_included": False},
+                            {"title": "Emissão de CTe 4.0", "is_included": True},
+                            {"title": "Emissão de MDFe", "is_included": True},
+                            {"title": "Por emitente (CNPJ)", "is_included": True},
+                        ],
+                        col={'xs': 12, 'lg': 4},
+                    ),
+                    PriceItem(
+                        plano='DFe-500',
+                        price=225,
+                        items_included=[
+                            {"title": "500 Emissões/mês", "is_included": True},
+                            {"title": "Suporte ilimitado", "is_included": False},
+                            {"title": "Compatível A1", "is_included": True},
+                            {"title": "Armazenamento ilimitado", "is_included": False},
+                            {"title": "Usuários ilimitados", "is_included": False},
+                            {"title": "Emissão de CTe 4.0", "is_included": True},
+                            {"title": "Emissão de MDFe", "is_included": True},
+                            {"title": "Por emitente (CNPJ)", "is_included": True},
+                        ],
+                        col={'xs': 12, 'lg': 4},
+                    ),
+                    PriceItemPopular(
+                        plano='DFe-1000',
+                        price=450,
+                        items_included=[
+                            {"title": "1000 Emissões/mês", "is_included": True},
+                            {"title": "Suporte ilimitado", "is_included": True},
+                            {"title": "Compatível A1", "is_included": True},
+                            {"title": "Armazenamento ilimitado", "is_included": True},
+                            {"title": "Usuários ilimitados", "is_included": True},
+                            {"title": "Emissão de CTe 4.0", "is_included": True},
+                            {"title": "Emissão de MDFe", "is_included": True},
+                            {"title": "Por emitente (CNPJ)", "is_included": True},
+                        ],
+                        col={'xs': 12, 'lg': 4},
+                    ),
+                    PriceItem(
+                        plano='DFe-2000',
+                        price=750,
+                        items_included=[
+                            {"title": "2000 Emissões/mês", "is_included": True},
+                            {"title": "Suporte ilimitado", "is_included": True},
+                            {"title": "Compatível A1", "is_included": True},
+                            {"title": "Armazenamento ilimitado", "is_included": True},
+                            {"title": "Usuários ilimitados", "is_included": True},
+                            {"title": "Emissão de CTe 4.0", "is_included": True},
+                            {"title": "Emissão de MDFe", "is_included": True},
+                            {"title": "Por emitente (CNPJ)", "is_included": True},
+                        ],
+                        col={'xs': 12, 'lg': 4},
+                    ),
+                    PriceItem(
+                        plano='DFe-PLUS',
+                        price=0,
+                        items_included=[
+                            {"title": "Acima de 2000 Emissões/mês", "is_included": True},
+                            {"title": "Consulte para preços especiais",
+                                "is_included": True},
+                            {"title": "Inclui todas opções DFe-2000", "is_included": True},
+                        ],
+                        # col={'xs': 12, 'lg': 6},
+                        col=12,
+                    ),
+                ],
+            )
+        )
 
         register_button = ft.ElevatedButton(
             "Registre-se Agora",
@@ -146,7 +356,7 @@ class LandingPage():
             controls=[
                 title,
                 subtitle,
-                MainContentItem(
+            MainContentItem(
                     title="Transforme sua Gestão de Transporte com TMS.CLOUD",
                     description="O TMS.CLOUD é a solução completa para o gerenciamento de transporte e logística. Automatize processos, controle suas operações em tempo real e reduza custos com uma plataforma intuitiva e eficiente. Leve a gestão do seu transporte de cargas para o próximo nível.",
                     image="images/tms_lp-01.webp",
@@ -159,18 +369,27 @@ class LandingPage():
                     image_left=False
                 ).build(),
                 MainContentItem(
-                    title="Gerencie seus MDFe's",
+                    title="Gerencie seus MDFe",
                     description="Emita e gerencie MDF-e de forma rápida e segura. O TMS.CLOUD facilita o controle de cargas em trânsito, centraliza informações e garante a conformidade com a legislação fiscal. Otimize suas rotas e operações.",
-                    image="images/lobo.jpg",
+                    image="images/tms_lp-03.webp",
                     image_left=True
                 ).build(),
                 MainContentItem(
                     title="Controle Total do Faturamento dos CT-es Emitidos",
                     description="Gere e acompanhe o faturamento dos seus CT-es com o TMS.CLOUD. Tenha relatórios precisos, automatize cobranças e otimize a gestão financeira da sua empresa. Mais controle, menos burocracia.",
-                    image="images/lobo.jpg",
+                    image="images/tms_lp-05.webp",
                     image_left=False
                 ).build(),
-                precos,
+                MainContentItem(
+                    title="Certificado",
+                    description="Assine documentos com certificado digital A1 e-CNPJ",
+                    image="images/certificado-A1.webp",
+                    image_size=150,
+                    image_left=True,
+                    url="https://certbr.gfsis.com.br/gestaofacil/loja/index?local=500&indicacao=779310&videoconferencia=sim&ocultarValidacao=sim",
+                    tooltip="Link: Clique para mais informações",
+                ).build(),
+                prices,
                 register_button,
             ],
             horizontal_alignment=ft.CrossAxisAlignment.CENTER,
