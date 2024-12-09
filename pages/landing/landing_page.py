@@ -20,12 +20,11 @@ class PriceItem(ft.UserControl):
         btn_plano = 'QUERO ESTE' if self.price > 0 else "CONSULTAR"
 
         return ft.Container(
-            bgcolor=ft.colors.ON_INVERSE_SURFACE,
+            bgcolor=ft.colors.BLUE_GREY_800,
             padding=ft.padding.symmetric(vertical=20, horizontal=50),
             col=self.col,
             border_radius=10,
             expand=True,
-            margin=ft.margin.all(20),
             content=ft.Column(
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                 spacing=30,
@@ -61,9 +60,9 @@ class PriceItem(ft.UserControl):
                         content=ft.Row(
                             controls=[
                                 ft.Text(
-                                    value=btn_plano, theme_style=ft.TextThemeStyle.BODY_LARGE, color=ft.colors.PRIMARY),
+                                    value=btn_plano, theme_style=ft.TextThemeStyle.BODY_LARGE, color=ft.colors.WHITE),
                                 ft.Icon(name=ft.icons.ARROW_FORWARD_IOS,
-                                        size=14, color=ft.colors.PRIMARY),
+                                        size=14, color=ft.colors.WHITE),
                             ],
                             alignment=ft.MainAxisAlignment.CENTER,
                         ),
@@ -86,8 +85,8 @@ class PriceItemPopular(PriceItem):
                     content=ft.Text(
                         value='Popular', color=ft.colors.BLACK, weight=ft.FontWeight.BOLD),
                     padding=ft.padding.symmetric(vertical=5, horizontal=40),
-                    right=-20,
-                    top=50,
+                    right=-30,
+                    top=10,
                     rotate=ft.Rotate(angle=math.radians(40)),
                 )
             ]
@@ -233,7 +232,7 @@ class LandingPage():
 
         prices = ft.Container(
             padding=20,
-            bgcolor=ft.colors.BLUE_GREY_800,
+            # bgcolor=ft.colors.BLUE_GREY_800,
             border_radius=10,
             alignment=ft.alignment.center,
             expand=True,
