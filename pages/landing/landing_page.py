@@ -25,7 +25,6 @@ class PriceItem(ft.UserControl):
             col=self.col,
             border_radius=10,
             expand=True,
-            # margin=ft.margin.only(top=20, left=20),
             margin=ft.margin.all(20),
             content=ft.Column(
                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -38,7 +37,7 @@ class PriceItem(ft.UserControl):
                             ft.TextSpan(text='R$', style=ft.TextStyle(
                                 color=ft.colors.WHITE)),
                             ft.TextSpan(text=price_text, style=ft.TextStyle(
-                                color=ft.colors.PRIMARY, weight=ft.FontWeight.BOLD, size=50)),
+                                color=ft.colors.GREEN, weight=ft.FontWeight.BOLD, size=50)),
                             ft.TextSpan(text=pormes_text, style=ft.TextStyle(
                                 color=ft.colors.WHITE)),
                         ]
@@ -49,7 +48,7 @@ class PriceItem(ft.UserControl):
                                 controls=[
                                     ft.Icon(
                                         name=ft.icons.CHECK if item['is_included'] else ft.icons.CLOSE,
-                                        color=ft.colors.PRIMARY,
+                                        color=ft.colors.GREEN if item['is_included'] else ft.colors.RED,
                                     ),
                                     ft.Text(
                                         value=item['title'], theme_style=ft.TextThemeStyle.BODY_MEDIUM)
@@ -99,7 +98,7 @@ class LandingPage():
     def __init__(self, page: ft.Page):
         self.page = page
         self.title_bar = ft.Text(
-            value="TMS.CLOUD   Gerenciamento de Transporte e logística",
+            value="TMS.CLOUD  Gerenciamento de Transporte e logística",
             color=ft.colors.WHITE,
         )
 
@@ -124,64 +123,71 @@ class LandingPage():
         def update_text_size():
             # Ajusta o tamanho do texto com base na largura da tela
             width = self.page.width
+            size = 20
 
-            # Debug
-            # print(f"Width: {width}")
-
-            self.title_bar.value = "TMS.CLOUD   Gerenciamento de Transporte e logística"
+            self.title_bar.value = "TMS.CLOUD  Gerenciamento de Transporte e logística"
+            self.title_bar.size = size
 
             self.actions_button.clear()
             self.actions_button.extend([
                 ft.TextButton(
-                    text="Inscrever-se",
+                    content=ft.Text(value="Inscrever-se", size=16),
                     style=ft.ButtonStyle(color=ft.colors.WHITE),
                     on_click=on_signup_click,
                 ),
                 ft.TextButton(
-                    text="Login",
+                    content=ft.Text(value="Login", size=16),
                     style=ft.ButtonStyle(color=ft.colors.WHITE),
                     on_click=on_login_click,
                 ),
             ])
 
             if width < 600:         # xs
-                self.title_bar.size = 14
-                self.title_bar.max_lines = 3
+                size = 14
+                # self.title_bar.size = 14
+                self.title_bar.max_lines = 2
 
-                if width < 570:
-                    self.title_bar.size = 12
-                    if width < 500:
+                if width < 576:
+                    # self.title_bar.size = 12
+                    size = 12
+                    if width < 545:
                         self.title_bar.value = "TMS.CLOUD" if width >= 435 else "TMS"
                         if width < 385:
+                            # Exclui o botão "Inscrever-se" da posição 0 da List actions_button
                             self.actions_button.pop(0)
-                            # self.actions_button.clear()
-                            # self.actions_button.append(
-                            #     ft.TextButton(
-                            #         text="Login",
-                            #         style=ft.ButtonStyle(
-                            #             color=ft.colors.WHITE),
-                            #         on_click=on_login_click,
-                            #     ),
-                            # )
             elif width < 900:       # sm
-                self.title_bar.size = 16
+                size = 14
             elif width < 1200:      # md
-                self.title_bar.size = 18
+                size = 16
             elif width < 1500:      # lg
-                self.title_bar.size = 22
+                size = 20
             else:                   # xl
-                self.title_bar.size = 24
+                size = 22
+
+            # Controla o tamanho do fonte no título da barra de ações (Menu Principal)
+            self.title_bar.size = size
+
+            # Controla o tamanho do fonte nos botões da barra de ação (Menu Principal) com tamanho máximo de 16
+            btn_size = size if size < 17 else 16
+            btn_increver = self.actions_button[0]
+            btn_increver.content = ft.Text(value="Inscrever-se", size=btn_size)
+
+            btn_login = self.actions_button[1]
+            btn_login.content = ft.Text(value="Login", size=btn_size)
 
             self.page.update()
 
+            # Debug
+            print(f"Width: {width} | title_bar.size: {self.title_bar.size}")
+
         self.actions_button = [
             ft.TextButton(
-                text="Inscrever-se",
+                content=ft.Text(value="Inscrever-se", size=16),
                 style=ft.ButtonStyle(color=ft.colors.WHITE),
                 on_click=on_signup_click,
             ),
             ft.TextButton(
-                text="Login",
+                content=ft.Text(value="Login", size=16),
                 style=ft.ButtonStyle(color=ft.colors.WHITE),
                 on_click=on_login_click,
             ),
@@ -409,8 +415,8 @@ class LandingPage():
                     title="Certificado",
                     description="Assine documentos com certificado digital A1 e-CNPJ",
                     image="images/certificado-A1.webp",
-                    image_size=150,
                     image_left=True,
+                    image_size=150,
                     url="https://certbr.gfsis.com.br/gestaofacil/loja/index?local=500&indicacao=779310&videoconferencia=sim&ocultarValidacao=sim",
                     tooltip="Link: Clique para mais informações",
                 ).build(),

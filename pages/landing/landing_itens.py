@@ -2,7 +2,7 @@ import flet as ft
 
 
 class MainContentItem():
-    def __init__(self, title: str, description: str, image: str, image_size: int = 0, image_left=True, url: str = None, tooltip: str = None):
+    def __init__(self, title: str, description: str, image: str, image_left=True, image_size: int = 0, url: str = None, tooltip: str = None):
         self.title = title
         self.description = description
         self.image_left = image_left
@@ -77,7 +77,6 @@ class MainContentItem():
         return ft.Container(
             bgcolor=bgcolor,
             border_radius=10,
-            # margin=ft.margin.only(top=40),
             expand=True,
             content=ft.ResponsiveRow(
                 controls=[side_left, side_right],
