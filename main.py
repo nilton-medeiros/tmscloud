@@ -1,7 +1,7 @@
 import flet as ft
 
 from pages.landing.landing_page import LandingPage
-
+from pages.login import Login
 
 class AppTheme:
     theme = ft.Theme(
@@ -59,7 +59,6 @@ class App:
 
         self.page.theme = self.theme
         self.page.title = "TMS.CLOUD"
-        # self.page.padding = 0
         self.page.scroll = ft.ScrollMode.AUTO
         self.page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 

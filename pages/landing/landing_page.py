@@ -81,11 +81,11 @@ class PriceItemPopular(PriceItem):
             controls=[
                 price_item,
                 ft.Container(
-                    bgcolor=ft.colors.PRIMARY,
+                    bgcolor=ft.colors.GREEN,
                     content=ft.Text(
                         value='Popular', color=ft.colors.BLACK, weight=ft.FontWeight.BOLD),
                     padding=ft.padding.symmetric(vertical=5, horizontal=40),
-                    right=-30,
+                    right=-40,
                     top=10,
                     rotate=ft.Rotate(angle=math.radians(40)),
                 )
