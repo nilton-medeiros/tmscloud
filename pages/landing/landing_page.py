@@ -99,6 +99,7 @@ class LandingPage():
         self.title_bar = ft.Text(
             value="TMS.CLOUD  Gerenciamento de Transporte e logística",
             color=ft.colors.WHITE,
+            font_family=ft.FontWeight.BOLD,
         )
 
     def build(self):
@@ -106,7 +107,7 @@ class LandingPage():
             dlg = ft.AlertDialog(
                 title=ft.Text("Inscrição"),
                 content=ft.Text(
-                    "Página de inscrição ainda em desenvolvimento."),
+                    "Página de inscrição em desenvolvimento."),
                 on_dismiss=lambda e: self.page.update()
             )
             self.page.open(dlg)
@@ -114,7 +115,7 @@ class LandingPage():
         def on_login_click(e):
             dlg = ft.AlertDialog(
                 title=ft.Text("Login"),
-                content=ft.Text("Página de login ainda em desenvolvimento."),
+                content=ft.Text("Página de login em desenvolvimento."),
                 on_dismiss=lambda e: self.page.update()
             )
             self.page.open(dlg)
@@ -177,7 +178,7 @@ class LandingPage():
             self.page.update()
 
             # Debug
-            print(f"Width: {width} | title_bar.size: {self.title_bar.size}")
+            # print(f"Width: {width} | title_bar.size: {self.title_bar.size}")
 
         self.actions_button = [
             ft.TextButton(
@@ -195,7 +196,8 @@ class LandingPage():
         # Menu AppBar
         self.page.appbar = ft.AppBar(
             leading=ft.Image(
-                src='images/tms_cloud_1024x1024.png',
+                # src='images/tms_cloud_1024x1024.png',
+                src='images/tms_cloud_1024x724.png',
                 tooltip="TMS.CLOUD | Sistrom Web",
             ),
             # Largura do image em leanding, altura não pode ser alterada.
@@ -460,18 +462,19 @@ class LandingPage():
         self.page.on_resized = lambda _: update_text_size()
         update_text_size()
 
-        return [
-            ft.Container(
-                content=main_content,
-                width=1400,
-                expand=True,
-                alignment=ft.alignment.center,
-                bgcolor=ft.colors.BLUE_GREY_900,
-                padding=20,
-            ),
-            ft.Container(
-                content=footer,
-                # width=1400,
-                alignment=ft.alignment.center,
-            )
-        ]
+        lp_main_content = ft.Container(
+            content=main_content,
+            width=1400,
+            expand=True,
+            alignment=ft.alignment.center,
+            bgcolor=ft.colors.BLUE_GREY_900,
+            padding=20,
+        )
+
+        lp_footer = ft.Container(
+            content=footer,
+            # width=1400,
+            alignment=ft.alignment.center,
+        )
+
+        self.page.add(lp_main_content, lp_footer)
