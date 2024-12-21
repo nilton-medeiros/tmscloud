@@ -2,6 +2,7 @@ import flet as ft
 
 from pages.landing.landing_page import LandingPage
 from pages.login import Login
+from pages.signup import Signup
 
 
 class AppTheme:
@@ -62,7 +63,10 @@ def main(page: ft.Page):
     page.title = "TMS.CLOUD"
     page.scroll = ft.ScrollMode.AUTO
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.window.min_width = 300
+    page.padding = 0
+    page.spacing = 0
     page.bgcolor = ft.colors.BLUE_GREY_900
 
     page.fonts = {
@@ -71,36 +75,51 @@ def main(page: ft.Page):
         "Roboto Regular": "fonts/Roboto-Regular.ttf",
     }
 
-    def routes(e):
-        page.controls.clear()
+    def route_change(e: ft.RouteChangeEvent):
+        page.views.clear()
+        pg_view = None
 
-        try:
-            route = page.route
-
-            if route == '/':
-                LandingPage(page).build()
-            elif route == 'logout':
+        match e.route:
+            case '/':
+                landing_page = LandingPage(page)
+                pg_view = ft.View(
+                    route='/',
+                    controls=[landing_page],
+                    appbar=page.appbar,
+                    vertical_alignment = ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+                )
+            case '/logout':
                 # page.sessions_data.clear()
                 page.route = '/'
-                page.update()
+            case '/login':
+                pg_view = ft.View(route='/login', controls=[Login(page)])
+            case '/signup':
+                pg_view = ft.View(route='/signup', controls=[Signup(page)])
+            case _:
+                # Opcional: tratamento para rotas não encontradas
+                pg_view = ft.View(
+                    route="/404",
+                    controls=[
+                        ft.AppBar(title=ft.Text("Página não encontrada"),
+                            bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.Text("404 - Página não encontrada", size=30),
+                        ft.ElevatedButton("Voltar para Início",
+                                    on_click=lambda _: page.go("/"))
+                    ]
+                )
 
-            if route == 'login':
-                Login(page)
-            elif route == 'register':
-                # Implementar a página de registro
-                #
-                page.add(ft.SnackBar(ft.Text("Página de registro"), open=True))
+        page.views.append(pg_view)
+        page.update()
 
-            page.update()
+    def view_pop(e: ft.ViewPopEvent):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
 
-        except Exception as e:
-            print(f"Error routing: {e}")
-            page.go('/')
-
-    page.on_route_change = routes
-
-    page.go('/')
-    page.update()
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.go(page.route)
 
 if __name__ == '__main__':
     ft.app(target=main, assets_dir="assets")

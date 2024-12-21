@@ -1,8 +1,9 @@
 import flet as ft
 
 
-class MainContentItem():
+class MainContentItem(ft.UserControl):
     def __init__(self, title: str, description: str, image: str, image_left=True, image_size: int = 0, url: str = None, tooltip: str = None):
+        super().__init__()
         self.title = title
         self.description = description
         self.image_left = image_left
