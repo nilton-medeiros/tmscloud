@@ -18,7 +18,7 @@ class PriceItem(ft.UserControl):
             controls=[
                 ft.Icon(
                     name=ft.icons.CHECK if item['is_included'] else ft.icons.CLOSE,
-                    color=ft.colors.GREEN if item['is_included'] else ft.colors.RED,
+                    color=ft.colors.AMBER if item['is_included'] else ft.colors.RED,
                 ),
                 ft.Text(
                     value=item['title'],
@@ -54,7 +54,7 @@ class PriceItem(ft.UserControl):
                         ft.TextSpan(
                             text=price_text,
                             style=ft.TextStyle(
-                                color=ft.colors.GREEN, weight=ft.FontWeight.BOLD, size=50)
+                                color=ft.colors.AMBER, weight=ft.FontWeight.BOLD, size=50)
                         ),
                         ft.TextSpan(
                             text=pormes_text,
@@ -105,7 +105,7 @@ class PriceItemPopular(PriceItem):
             controls=[
                 price_container,
                 ft.Container(
-                    bgcolor=ft.colors.GREEN,
+                    bgcolor=ft.colors.AMBER,
                     content=ft.Text(
                         value='Popular',
                         color=ft.colors.BLACK,
@@ -359,7 +359,7 @@ def LandingPage(page: ft.Page):
 
     register_button = ft.ElevatedButton(
         "Registre-se Agora",
-        bgcolor=ft.colors.GREEN_500,
+        bgcolor=ft.colors.AMBER_500,
         color=ft.colors.WHITE,
         on_click=lambda _: page.go('/signup/DFe-1000'),
     )
