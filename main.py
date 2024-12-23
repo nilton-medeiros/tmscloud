@@ -1,3 +1,4 @@
+import os
 import flet as ft
 
 from pages.landing.landing_page import LandingPage
@@ -56,6 +57,9 @@ class AppTheme:
 
 
 def main(page: ft.Page):
+    # Força a limpeza do cache no início da aplicação
+    page.clean()
+
     if not hasattr(page, 'sessions_data'):
         page.sessions_data = {}
 
@@ -79,8 +83,11 @@ def main(page: ft.Page):
         page.views.clear()
         pg_view = None
 
-        match e.route:
-            case '/':
+        # Separa a rota em partes usando '/'
+        route_parts = e.route.strip('/').split('/')
+
+        match route_parts[0]:
+            case '':    # Raiz '/'
                 landing_page = LandingPage(page)
                 pg_view = ft.View(
                     route='/',
@@ -89,24 +96,44 @@ def main(page: ft.Page):
                     vertical_alignment = ft.MainAxisAlignment.CENTER,
                     horizontal_alignment = ft.CrossAxisAlignment.CENTER,
                 )
-            case '/logout':
+            case 'logout':
                 # page.sessions_data.clear()
                 page.route = '/'
-            case '/login':
-                pg_view = ft.View(route='/login', controls=[Login(page)])
-            case '/signup':
-                pg_view = ft.View(route='/signup', controls=[Signup(page)])
+            case 'login':
+                pg_view = ft.View(
+                    route='/login',
+                    controls=[Login(page)],
+                    vertical_alignment = ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+                )
+            case 'signup':
+                # Verifica se exite um parâmentro plano
+                planos_validos = ['DFe-100', 'DFe-200', 'DFe-300', 'DFe-500', 'DFe-1000', 'DFe-2000', 'DFe-PLUS']
+                plano = route_parts[1] if len(route_parts) > 1 and route_parts[1] in planos_validos else None
+
+                pg_view = ft.View(
+                    route=e.route,  # Mantém a rota original com o parâmetro
+                    controls=[Signup(page, plano)],
+                    vertical_alignment = ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+                )
             case _:
                 # Opcional: tratamento para rotas não encontradas
                 pg_view = ft.View(
                     route="/404",
                     controls=[
-                        ft.AppBar(title=ft.Text("Página não encontrada"),
-                            bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.AppBar(
+                            title=ft.Text("Página não encontrada"),
+                            bgcolor=ft.colors.SURFACE_VARIANT
+                        ),
                         ft.Text("404 - Página não encontrada", size=30),
-                        ft.ElevatedButton("Voltar para Início",
-                                    on_click=lambda _: page.go("/"))
-                    ]
+                        ft.ElevatedButton(
+                            text="Voltar para Início",
+                            on_click=lambda _: page.go("/")
+                        )
+                    ],
+                    vertical_alignment = ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
                 )
 
         page.views.append(pg_view)

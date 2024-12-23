@@ -82,6 +82,7 @@ class PriceItem(ft.UserControl):
                         ],
                         alignment=ft.MainAxisAlignment.CENTER,
                     ),
+                    on_click=lambda _: self.page.go(f'/signup/{self.plano}')
                 )
             ]
         )
@@ -139,7 +140,7 @@ def LandingPage(page: ft.Page):
             ft.TextButton(
                 content=ft.Text(value="Inscrever-se", size=16),
                 style=ft.ButtonStyle(color=ft.colors.WHITE),
-                on_click=lambda _: page.go('/signup'),
+                on_click=lambda _: page.go('/signup/DFe-1000'),
             ),
             ft.TextButton(
                 content=ft.Text(value="Login", size=16),
@@ -183,14 +184,11 @@ def LandingPage(page: ft.Page):
 
         page.update()
 
-        # Debug
-        # print(f"Width: {width} | title_bar.size: {title_bar.size}")
-
     action_buttons = [
         ft.TextButton(
             content=ft.Text(value="Inscrever-se", size=16),
             style=ft.ButtonStyle(color=ft.colors.WHITE),
-            on_click=lambda _: page.go('/signup'),
+            on_click=lambda _: page.go('/signup/DFe-1000'),
         ),
         ft.TextButton(
             content=ft.Text(value="Login", size=16),
@@ -199,7 +197,6 @@ def LandingPage(page: ft.Page):
         ),
     ]
 
-    # Menu AppBar
     page.appbar = ft.AppBar(
         leading=ft.Image(
             src='images/tms_cloud_1024x724.png',
@@ -364,7 +361,7 @@ def LandingPage(page: ft.Page):
         "Registre-se Agora",
         bgcolor=ft.colors.GREEN_500,
         color=ft.colors.WHITE,
-        on_click=lambda _: page.go('/signup'),
+        on_click=lambda _: page.go('/signup/DFe-1000'),
     )
 
     def section_title(title: str):
@@ -383,28 +380,28 @@ def LandingPage(page: ft.Page):
             MainContentItem(
                 title="Transforme sua Gestão de Transporte com TMS.CLOUD",
                 description="O TMS.CLOUD é a solução completa para o gerenciamento de transporte e logística. Automatize processos, controle suas operações em tempo real e reduza custos com uma plataforma intuitiva e eficiente. Leve a gestão do seu transporte de cargas para o próximo nível.",
-                image="images/tms_lp-01.webp",
+                image="images/tms_lp_1.webp",
                 image_left=True,
             ),
             section_title(title="CTe 4.0"),
             MainContentItem(
                 title="Emita CTe 4.0 com Facilidade",
                 description="Simplifique a emissão do CT-e 4.0 diretamente no TMS.CLOUD. Garanta conformidade com a legislação, reduza erros e ganhe agilidade no transporte de carga. Tudo integrado e automatizado para otimizar suas operações.",
-                image="images/tms_lp-02.png",
+                image="images/tms_lp_2.png",
                 image_left=False
             ),
             section_title(title="MDFe"),
             MainContentItem(
                 title="Gerencie seus MDFe",
                 description="Emita e gerencie MDF-e de forma rápida e segura. O TMS.CLOUD facilita o controle de cargas em trânsito, centraliza informações e garante a conformidade com a legislação fiscal. Otimize suas rotas e operações.",
-                image="images/tms_lp-03.webp",
+                image="images/tms_lp_3.webp",
                 image_left=True
             ),
             section_title(title="Faturamento"),
             MainContentItem(
                 title="Controle Total do Faturamento dos CT-es Emitidos",
                 description="Gere e acompanhe o faturamento dos seus CT-es com o TMS.CLOUD. Tenha relatórios precisos, automatize cobranças e otimize a gestão financeira da sua empresa. Mais controle, menos burocracia.",
-                image="images/tms_lp-05.webp",
+                image="images/tms_lp_4.webp",
                 image_left=False
             ),
             section_title(title="Certificado Digital"),
