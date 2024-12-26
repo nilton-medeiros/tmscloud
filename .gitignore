@@ -128,6 +128,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Firestore
+serviceAccountKey.json
+
 # Spyder project settings
 .spyderproject
 .spyproject

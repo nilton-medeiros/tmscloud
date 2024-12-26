@@ -66,8 +66,8 @@ def main(page: ft.Page):
     page.theme = AppTheme.theme
     page.title = "TMS.CLOUD"
     page.scroll = ft.ScrollMode.AUTO
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
+    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
     page.window.min_width = 300
     page.padding = 0
     page.spacing = 0
