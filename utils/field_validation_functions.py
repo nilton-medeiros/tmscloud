@@ -1,6 +1,5 @@
 import re
 from typing import Tuple
-import flet as ft
 
 
 def validate_password_strength(password: str) -> Tuple[bool, str]:
@@ -46,6 +45,7 @@ def format_phone_number(phone: str) -> str:
     """
     # Remove todos os caracteres não numéricos
     phone = re.sub(r'\D', '', phone)
+    # phone = ''.join(filter(str.isdigit, phone)) // Outra forma de remover caracteres
 
     # Adiciona o código do país (+55 para Brasil) se não estiver presente
     if not phone.startswith('55'):
@@ -62,6 +62,7 @@ def validate_phone(phone: str) -> Tuple[bool, str]:
     """
     # Remove todos os caracteres não numéricos para a validação
     numbers = re.sub(r'\D', '', phone)
+    # numbers = ''.join(filter(str.isdigit, phone)) // Outra forma de remover caracteres
 
     if not numbers:
         return False, "O telefone é obrigatório"
@@ -72,7 +73,20 @@ def validate_phone(phone: str) -> Tuple[bool, str]:
     if len(numbers) > 11:
         return False, "O telefone não pode ter mais de 11 dígitos"
 
-    if len(numbers) == 11 and numbers[2] not in '96789':
+    if len(numbers) == 11 and numbers[2] not in '9678':
         return False, "Celular inválido (deve começar com 9)"
 
-    return True, "Telefone válido"
+    dispositivo = 'Celular' if len(numbers) == 11 and numbers[2] in '9678' else 'Telefone'
+    return True, f"{dispositivo} válido"
+
+
+def get_first_and_last_name(full_name: str) -> Tuple[str, str | None]:
+    """
+    Extrai o primeiro e o último nome de uma string de nome completo.
+    Retorna uma tupla (primeiro_nome, ultimo_nome).
+    """
+    list_names = full_name.split()
+    first_name = list_names[0].strip().capitalize()
+    last_name = list_names[-1].strip().capitalize() if len(list_names) > 1 else None
+
+    return first_name, last_name

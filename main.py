@@ -1,6 +1,7 @@
 import os
 import flet as ft
 
+from pages.home import HomePage
 from pages.landing.landing_page import LandingPage
 from pages.login import Login
 from pages.signup import Signup
@@ -87,7 +88,7 @@ def main(page: ft.Page):
         route_parts = e.route.strip('/').split('/')
 
         match route_parts[0]:
-            case '':    # Raiz '/'
+            case '':    # Raiz '/'  Landing Page
                 landing_page = LandingPage(page)
                 pg_view = ft.View(
                     route='/',
@@ -96,17 +97,7 @@ def main(page: ft.Page):
                     vertical_alignment = ft.MainAxisAlignment.CENTER,
                     horizontal_alignment = ft.CrossAxisAlignment.CENTER,
                 )
-            case 'logout':
-                # page.sessions_data.clear()
-                page.route = '/'
-            case 'login':
-                pg_view = ft.View(
-                    route='/login',
-                    controls=[Login(page)],
-                    vertical_alignment = ft.MainAxisAlignment.CENTER,
-                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
-                )
-            case 'signup':
+            case 'signup':  # Registro
                 # Verifica se exite um parâmentro plano
                 planos_validos = ['DFe-100', 'DFe-200', 'DFe-300', 'DFe-500', 'DFe-1000', 'DFe-2000', 'DFe-PLUS']
                 plano = route_parts[1] if len(route_parts) > 1 and route_parts[1] in planos_validos else None
@@ -114,6 +105,23 @@ def main(page: ft.Page):
                 pg_view = ft.View(
                     route=e.route,  # Mantém a rota original com o parâmetro
                     controls=[Signup(page, plano)],
+                    vertical_alignment = ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+                )
+            case 'login':
+                pg_view = ft.View(
+                    route='/login',
+                    controls=[Login(page)],
+                    vertical_alignment = ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment = ft.CrossAxisAlignment.CENTER,
+                )
+            case 'logout':
+                # page.sessions_data.clear()
+                page.route = '/'
+            case 'home':    # Homepage do usuário logado
+                pg_view = ft.View(
+                    route='/home',
+                    controls=[HomePage(page)],
                     vertical_alignment = ft.MainAxisAlignment.CENTER,
                     horizontal_alignment = ft.CrossAxisAlignment.CENTER,
                 )

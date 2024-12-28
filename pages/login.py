@@ -8,7 +8,7 @@ def Login(page: ft.Page):
         alignment=ft.alignment.center,
         content=ft.Column(
             controls=[
-                ft.Text('Login não Implementado', size=40, color=ft.colors.WHITE),
+                ft.Text('Login em construção!', size=40, color=ft.colors.WHITE),
                 ft.ElevatedButton(
                     text="Voltar para Landing-Page",
                     color=ft.colors.WHITE,

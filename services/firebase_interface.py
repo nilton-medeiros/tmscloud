@@ -1,34 +1,21 @@
-import os
-import firebase_admin
-from firebase_admin import auth, credentials, exceptions
+from firebase_admin import auth
+from firebase_admin import firestore
+from firebase_admin import exceptions
 
+from services.firebase_initialize import get_firebase_app
 from utils.field_validation_functions import format_phone_number
 
-# Obtém o caminho absoluto para o arquivo de credenciais
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CREDENTIALS_PATH = os.path.join(BASE_DIR, 'serviceAccountKey.json')
 
-# Inicializa o aplicativo Firebase apenas se ainda não estiver inicializado
-if not firebase_admin._apps:
-    try:
-        cred = credentials.Certificate(CREDENTIALS_PATH)
-        firebase_admin.initialize_app(cred)
-        print(" ")
-        print("INTERFACE: Firebase inicializado com sucesso!")
-        print(" ")
-    except FileNotFoundError:
-        print(f"INTERFACE: Erro: Arquivo de credenciais não encontrado em {CREDENTIALS_PATH}")
+# Conecta ao Firebase admin
+firebase_app = get_firebase_app()
 
+
+# Registra usuário no Google Authentication
 def signup_fb(user_data: dict):
-
-    # Verifica se o Firebase SDK foi inicializado
-    print(" ")
-    print("Firebase inicializado:", firebase_admin._apps)
-    print(" ")
 
     try:
         # Formatar o número de telefone para o padrão E.164
-        formatted_phone = format_phone_number(user_data['phone'])
+        formatted_phone = format_phone_number(user_data['phone_number'])
 
         # Criar usuário no Firebase Authentication
         user = auth.create_user(
@@ -38,13 +25,21 @@ def signup_fb(user_data: dict):
             phone_number=formatted_phone
         )
 
-        # Aqui você pode adicionar mais lógica, como salvar dados adicionais
-        # no Firestore ou Realtime Database
+        user_uid = user.uid
+        user_data['uid'] = user_uid
+        user_data['phone_number'] = formatted_phone
 
-        return user
+        # Inicializa o cliente do Firestore
+        db = firestore.client()
+
+        # Adicione o usuário à coleção `users`
+        doc_ref = db.collection('users').document(user_uid)
+        doc_ref.set(user_data)
+
+        return user_data
     except exceptions.FirebaseError as error:
         print(f"Erro de autenticação: {error}")
-        return None
+        return error
 
 
 

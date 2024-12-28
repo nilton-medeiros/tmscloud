@@ -1,6 +1,7 @@
 import flet as ft
 from services.firebase_interface import signup_fb
 from utils.field_validation_functions import validate_email, validate_password_strength, validate_phone
+from utils.message_snackbar import message_snackbar
 
 
 # https://github.com/webtechmoz/autenticator/blob/master/autenticador/main.py#L12
@@ -8,7 +9,7 @@ from utils.field_validation_functions import validate_email, validate_password_s
 
 def Signup(page: ft.Page, plano: str = None):
     name_input = ft.TextField(
-        hint_text='Nome completo',
+        hint_text='Nome e Sobrenome',
         prefix_icon=ft.icons.PERSON,
         text_vertical_align=-0.30,
         border=ft.InputBorder.UNDERLINE,
@@ -118,62 +119,34 @@ def Signup(page: ft.Page, plano: str = None):
         can_reveal_password=True
     )
 
-    def show_error_message(message: str):
-        snack_bar = ft.SnackBar(
-            content=ft.Text(message),
-            bgcolor=ft.colors.RED_100,
-            show_close_icon=True,
-            close_icon_color=ft.colors.RED,
-            padding=ft.padding.all(10),
-            duration=7000,
-            behavior=ft.SnackBarBehavior.FLOATING,
-            margin=ft.margin.all(10),
-        )
-        page.overlay.append(snack_bar)
-        page.update()
-        snack_bar.open = True  # Abre o SnackBar após adicioná-lo
-        page.update()
-
-    def show_success_message(message: str):
-        snack_bar = ft.SnackBar(
-            content=ft.Text(message),
-            bgcolor=ft.colors.GREEN_400,
-            duration=10000,
-        )
-        page.overlay.append(snack_bar)
-        page.update()
-        snack_bar.open = True  # Abre o SnackBar após adicioná-lo
-        page.update()
-
-
     def validate_form() -> bool:
         """Valida todos os campos do formulário"""
         if not name_input.value or len(name_input.value.strip()) < 3:
-            show_error_message("O nome deve ter pelo menos 3 caracteres")
+            message_snackbar(page, "O nome deve ter pelo menos 3 caracteres")
             return False
 
         # Validação de email
         is_valid_email, email_msg = validate_email(email_input.value)
         if not is_valid_email:
-            show_error_message(email_msg)
+            message_snackbar(page, email_msg)
             return False
 
         # Validação de telefone
         is_valid_phone, phone_msg = validate_phone(phone_input.value)
         if not is_valid_phone:
-            show_error_message(phone_msg)
+            message_snackbar(page, phone_msg)
             return False
 
         # Validação de senha
         is_valid_password, password_msg = validate_password_strength(
             password_input.value)
         if not is_valid_password:
-            show_error_message(password_msg)
+            message_snackbar(page, password_msg)
             return False
 
         # Validação de confirmação de senha
         if password_input.value != password_again_input.value:
-            show_error_message("As senhas não coincidem")
+            message_snackbar(page, "As senhas não coincidem")
             return False
 
         return True
@@ -183,24 +156,53 @@ def Signup(page: ft.Page, plano: str = None):
             return
 
         try:
+            # Decidir se cria o objeto User aqui e valida pelo objeto ou usa validação do formulário desta página: validate_form()
             # Chama a função de registro do Firebase
-            result = signup_fb({
-                'name': name_input.value,
+            user = {
                 'email': email_input.value,
-                'phone': phone_input.value,
-                'password': password_input.value
-            })
+                'display_name': name_input.value.strip(),
+                'phone_number': phone_input.value,
+                'password': password_input.value,
+                'profile': "admin"
+            }
+            result = signup_fb(user)
 
-            if result:
-                show_success_message("Registro realizado com sucesso!")
-                page.go('/login')
+            # Debug
+            print(" ")
+            print(f"Type de result: {type(result)}")
+            print(f"Result: {result}")
+
+            # Atualiza o nome do usuário na tela principal
+            # app.current_user = result['name']  # Assumindo que o nome é o 'name' do Firebase
+
+            # Atualiza o nome do usuário na barra de navegação
+            # app.navigation_bar.title = f'Bem-vindo, {result["name"]}'  # Assumindo que o nome é o 'name' do Firebase
+
+            # Atualiza a imagem do usuário na barra de navegação
+            # app.navigation_bar.icon = ft.Image(
+            #     source=get_user_icon(result['email']),
+            #     width=24,
+            #     height=24,
+            # )  # Assumindo que o email é usado para buscar a imagem do Firebase
+
+            # Atualiza a lista de contatos na tela principal
+
+            # Verifica se o resultado é um erro ou o objeto do usuário
+            if f"{result}" == "The user with the provided email already exists (EMAIL_EXISTS).":
+                message_snackbar(
+                    page, "Erro ao registrar: O usuário com o e-mail fornecido já existe!")
             else:
-                show_error_message(
-                    "Erro ao realizar o registro. Tente novamente.")
+                message_snackbar(
+                    page=page,
+                    message="Registro realizado com sucesso!",
+                    msg_error=False
+                )
+
+                page.go('/home')
 
         except Exception as e:
             print(f"Error: {str(e)}")
-            show_error_message(f"Erro: {str(e)}")
+            message_snackbar(page, f"Erro inesperado: {str(e)}")
 
     signup_button = ft.ElevatedButton(
         text='Registrar',
