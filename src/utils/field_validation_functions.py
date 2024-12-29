@@ -83,6 +83,9 @@ def validate_phone(phone: str) -> Tuple[bool, str]:
 def get_first_and_last_name(full_name: str) -> Tuple[str, str | None]:
     """
     Extrai o primeiro e o último nome de uma string de nome completo.
+
+    Parametrôs:
+        full_name (str): Nome e/ou sobrenome do usuário.
     Retorna uma tupla (primeiro_nome, ultimo_nome).
     """
     list_names = full_name.split()

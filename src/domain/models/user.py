@@ -1,9 +1,8 @@
 from typing import Optional
 from dataclasses import dataclass, field
 
-from models.nome_pessoa import NomePessoa
-from models.phone_number import PhoneNumber
-
+from src.domain.models.nome_pessoa import NomePessoa
+from src.domain.models.phone_number import PhoneNumber
 
 @dataclass
 class User:

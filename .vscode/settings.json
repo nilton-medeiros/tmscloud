@@ -1,0 +1,13 @@
+{
+  "material-icon-theme.folders.associations": {
+    "domain": "Guard",
+    "portas": "Circleci",
+    "adaptadores": "Connection",
+    "usuario": "admin",
+    "mysql": "database",
+    "mariadb": "database",
+  },
+  "python.analysis.extraPaths": [
+    "./src/domain"
+  ]
+}

@@ -12,6 +12,7 @@ click==8.1.7
 colorama==0.4.6
 cookiecutter==2.6.0
 cryptography==44.0.0
+deepl==1.20.0
 fastapi==0.115.5
 firebase-admin==6.6.0
 flet==0.24.1

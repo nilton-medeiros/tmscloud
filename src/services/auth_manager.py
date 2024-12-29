@@ -1,8 +1,8 @@
-from dataclasses import dataclass
-from typing import Optional, Dict, Any
+# from dataclasses import dataclass
+# from typing import Optional, Dict, Any
+# from datetime import datetime, timedelta
+
 import flet as ft
-from datetime import datetime, timedelta
-from models.user import User
 
 # Em construção...
 class AuthManager:

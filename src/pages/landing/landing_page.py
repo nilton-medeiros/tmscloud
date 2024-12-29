@@ -2,7 +2,7 @@ import math
 import flet as ft
 from typing import List, Dict, Union
 
-from pages.landing.landing_itens import MainContentItem
+from src.pages.landing.landing_itens import MainContentItem
 
 
 class PriceItem(ft.UserControl):

@@ -1,10 +1,9 @@
-import os
 import flet as ft
 
-from pages.home import HomePage
-from pages.landing.landing_page import LandingPage
-from pages.login import Login
-from pages.signup import Signup
+from src.pages.home import HomePage
+from src.pages.landing.landing_page import LandingPage
+from src.pages.login import Login
+from src.pages.signup import Signup
 
 
 class AppTheme:

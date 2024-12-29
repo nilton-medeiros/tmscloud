@@ -2,6 +2,14 @@ import flet as ft
 
 
 def message_snackbar(page: ft.Page, message: str, msg_error: bool = True):
+    """
+    Exibe uma notificação de mensagem no topo da tela.
+
+    Parâmetros:
+        page (ft.Page): Página onde o Snackbar será exibido.
+        message (str): Mensagem a ser exibida.
+        msg_error (bool, optional): Indica se a mensagem é de erro. Defaults to True.
+    """
     bg_color = ft.colors.RED_100 if msg_error else ft.colors.GREEN_100
     icon_color = ft.colors.RED if msg_error else ft.colors.GREEN
 
