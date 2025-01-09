@@ -7,12 +7,15 @@ tmscloud/
 │   ├── icons/
 │   ├── images/
 │   │   ├── avatars/
-│   │   ├── nao_utilizadas/
+│   │   └── nao_utilizadas/
 │   ├── media/
 │   └── styles/
 ├── src/
 │   ├── components/
+│   ├── controller/
 │   ├── db/
+│   │   ├── firebase/
+│   │   └── interfaces/
 │   ├── domain/
 │   │   └── models/
 │   ├── pages/

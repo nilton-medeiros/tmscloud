@@ -1,4 +1,3 @@
-# db/firebase/firebase_user_repository.py
 from firebase_admin import auth
 from firebase_admin import firestore
 from firebase_admin import exceptions

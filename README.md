@@ -70,7 +70,7 @@ python manage.py runserver
 
 ## Créditos
 
-- [AlgoKi](...)
+- [AlgoAKi](...)
 
 ## Ajuda
 
