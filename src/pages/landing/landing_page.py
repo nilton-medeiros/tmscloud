@@ -6,7 +6,13 @@ from src.pages.landing.landing_itens import MainContentItem
 
 
 class PriceItem(ft.UserControl):
-    def __init__(self, plano: str, price: int, items_included: List[Dict[str, Union[str, bool]]], col: Dict):
+    def __init__(
+            self,
+            plano: str,
+            price: int,
+            items_included: List[Dict[str, Union[str, bool]]],
+            col: Dict = {'xs': 12, 'lg': 4}
+        ):
         super().__init__()
         self.plano = plano
         self.price = price
@@ -252,7 +258,6 @@ def LandingPage(page: ft.Page):
                         {"title": "Por emitente (CNPJ)",
                             "is_included": True},
                     ],
-                    col={'xs': 12, 'lg': 4},
                 ),
                 PriceItem(
                     plano='DFe-200',
@@ -269,7 +274,6 @@ def LandingPage(page: ft.Page):
                         {"title": "Por emitente (CNPJ)",
                             "is_included": True},
                     ],
-                    col={'xs': 12, 'lg': 4},
                 ),
                 PriceItem(
                     plano='DFe-300',
@@ -286,7 +290,6 @@ def LandingPage(page: ft.Page):
                         {"title": "Por emitente (CNPJ)",
                             "is_included": True},
                     ],
-                    col={'xs': 12, 'lg': 4},
                 ),
                 PriceItem(
                     plano='DFe-500',
@@ -303,7 +306,6 @@ def LandingPage(page: ft.Page):
                         {"title": "Por emitente (CNPJ)",
                             "is_included": True},
                     ],
-                    col={'xs': 12, 'lg': 4},
                 ),
                 PriceItemPopular(
                     plano='DFe-1000',
@@ -320,7 +322,6 @@ def LandingPage(page: ft.Page):
                         {"title": "Por emitente (CNPJ)",
                             "is_included": True},
                     ],
-                    col={'xs': 12, 'lg': 4},
                 ),
                 PriceItem(
                     plano='DFe-2000',
@@ -337,7 +338,6 @@ def LandingPage(page: ft.Page):
                         {"title": "Por emitente (CNPJ)",
                             "is_included": True},
                     ],
-                    col={'xs': 12, 'lg': 4},
                 ),
                 PriceItem(
                     plano='DFe-PLUS',

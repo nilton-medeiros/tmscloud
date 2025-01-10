@@ -1,5 +1,5 @@
 import flet as ft
-from src.controller.user_controller import handle_save_user
+from src.controllers.user_controller import handle_save_user
 from src.utils.field_validation_functions import get_first_and_last_name, validate_email, validate_password_strength, validate_phone
 from src.utils.message_snackbar import message_snackbar
 
